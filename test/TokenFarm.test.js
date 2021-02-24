@@ -1,3 +1,5 @@
+const { utils } = require("react-bootstrap");
+
 const DaiToken = artifacts.require("DaiToken");
 const DappToken = artifacts.require("DappToken");
 const TokenFarm = artifacts.require("TokenFarm");
@@ -6,7 +8,12 @@ require("chai")
   .use(require("chai-as-promised"))
   .should()
 
-contract("TokenFarm", (accounts) => {
+const tokens = (num) => {
+  return web3.utils.toWei(num, "ether")
+  // give back 18 decimal point for tokens
+}
+
+contract("TokenFarm", ([owner, investor]) => {
   let daiToken, dappToken, tokenFarm
    
   before(async () => {
@@ -16,14 +23,24 @@ contract("TokenFarm", (accounts) => {
     tokenFarm = await TokenFarm.new(dappToken.address, daiToken.address)
 
     // transfer token to the token farm (dapp tokens)
-    await dappToken.transfer(tokenFarm.address, "1000000000000000000000000")
+    await dappToken.transfer(tokenFarm.address, tokens("1000000"))
+
+    // tranfer investor tokens
+    await daiToken.transfer(investor, tokens("100"), { from: owner })
+    // we have to pass in data for who is calling the function (thats accounts 0)
   })
 
   describe("mock dai deployment", () => {
     it("has a name", async () => {
-      
       const name = await daiToken.name()
       assert.equal(name, "Mock DAI Token")
+    })
+  })
+  
+  describe("Dapp token deployment", () => {
+    it("has a name", async () => {
+      const name = await dappToken.name()
+      assert.equal(name, "DApp Token")
     })
   })
 })
