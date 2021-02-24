@@ -1,3 +1,4 @@
+const { assert } = require("chai");
 const { utils } = require("react-bootstrap");
 
 const DaiToken = artifacts.require("DaiToken");
@@ -41,6 +42,18 @@ contract("TokenFarm", ([owner, investor]) => {
     it("has a name", async () => {
       const name = await dappToken.name()
       assert.equal(name, "DApp Token")
+    })
+  })
+
+  describe("Token Farm deployment", () => {
+    it("has a name", async () => {
+      const name = await tokenFarm.name()
+      assert.equal(name, "Dapp Token Farm")
+    })
+
+    it("has a token balance", async () => {
+      const balance = await dappToken.balanceOf(tokenFarm.address)
+      assert.equal(balance.toString(), tokens("1000000"))
     })
   })
 })
