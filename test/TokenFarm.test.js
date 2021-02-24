@@ -7,10 +7,21 @@ require("chai")
   .should()
 
 contract("TokenFarm", (accounts) => {
+  let daiToken, dappToken, tokenFarm
+   
+  before(async () => {
+    // load contracts
+    daiToken = await DaiToken.new()
+    dappToken = await DappToken.new()
+    tokenFarm = await TokenFarm.new(dappToken.address, daiToken.address)
+
+    // transfer token to the token farm (dapp tokens)
+    await dappToken.transfer(tokenFarm.address, "1000000000000000000000000")
+  })
 
   describe("mock dai deployment", () => {
     it("has a name", async () => {
-      let daiToken = await DaiToken.new()
+      
       const name = await daiToken.name()
       assert.equal(name, "Mock DAI Token")
     })
