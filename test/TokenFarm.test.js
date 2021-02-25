@@ -57,8 +57,8 @@ contract("TokenFarm", ([owner, investor]) => {
   })
 
   describe("Farming Tokens", async () => {
+    let result;
     it("rewards investors for staking in DAI tokens", async () => {
-      let result;
 
       // check investor balance before staking
       result = await daiToken.balanceOf(investor)
@@ -93,7 +93,23 @@ contract("TokenFarm", ([owner, investor]) => {
     it("should only let the onwner issue tokens", async () => {
       await tokenFarm.issueTokens({ from: investor }).should.be.rejected;
     })
+
+    it("should unstake the DAI tokens", async () => {
+      await tokenFarm.unstakeTokens({ from: investor })
+
+      // investor should have origin dai tokens back
+      result = await daiToken.balanceOf(investor)
+      assert.equal(result.toString(), tokens("100"), "investor DAI balance should be 100 after withdraw") 
+
+      // contract should not have any dai tokens left
+      result = await daiToken.balanceOf(tokenFarm.address)
+      assert.equal(result.toString(), tokens("0"), "token farm should have 0 dai after unstaking")
+
+      // investors staking balance should be zero, and not currently staking
+      result = await tokenFarm.stakingBalance(investor)
+      assert.equal(result.toString(), tokens("0")), "investor should not have a staking balance"
+      result = await tokenFarm.isStaking(investor)
+      assert.equal(result.toString(), "false", "investor should not be currently staking")
+    })
   })
-
-
 })
