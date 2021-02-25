@@ -7,6 +7,7 @@ contract TokenFarm {
   string public name = "Dapp Token Farm";
   DappToken public dappToken;
   DaiToken public daiToken;
+  address public owner;
 
   // all of the addresses that have ever staked
   address[] public stakers;
@@ -20,11 +21,14 @@ contract TokenFarm {
   constructor(DappToken _dappToken, DaiToken _daiToken) public {
     dappToken = _dappToken;
     daiToken = _daiToken;
+    owner = msg.sender;
     // grab token addresses and assign to state vars to access them in other funtions
   }
 
   // staking tokens (deposit)
   function stakeTokens(uint _amount) public {
+
+    require(_amount > 0, "amount cannot be zero");
     // we want to trander DAI tokens from the investors wallet to this smartcontract
     // transferFrom is an ERC-20 standrad function in the daiToken
     daiToken.transferFrom(msg.sender, address(this), _amount);
@@ -44,6 +48,9 @@ contract TokenFarm {
   }
   // issuing tokens as intrest
     function issueToken() public {
+      // only the owner of the contract can call the function
+      require(msg.sender == owner, "caller must be owner");
+      
       for (uint i = 0; i < stakers.length; i++) {
 
         // we are grabbing the balance and adress of each staker
@@ -51,8 +58,8 @@ contract TokenFarm {
         uint balance = stakingBalance[recipient];
 
         if (balance > 0) {
-        // for the number of DAI stake we give an equivalent DApp token
-        dappToken.transfer(recipient, balance);
+          // for the number of DAI stake we give an equivalent DApp token
+          dappToken.transfer(recipient, balance);
         }
       }
     }
