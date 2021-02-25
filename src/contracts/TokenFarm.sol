@@ -44,7 +44,17 @@ contract TokenFarm {
   }
   // issuing tokens as intrest
     function issueToken() public {
-      
+      for (uint i = 0; i < stakers.length; i++) {
+
+        // we are grabbing the balance and adress of each staker
+        address recipient = stakers[i];
+        uint balance = stakingBalance[recipient];
+
+        if (balance > 0) {
+        // for the number of DAI stake we give an equivalent DApp token
+        dappToken.transfer(recipient, balance);
+        }
+      }
     }
   // unstaking tokens (withdraw)
 
