@@ -1,5 +1,4 @@
 const { assert } = require("chai");
-const { utils } = require("react-bootstrap");
 
 const DaiToken = artifacts.require("DaiToken");
 const DappToken = artifacts.require("DappToken");
@@ -82,6 +81,15 @@ contract("TokenFarm", ([owner, investor]) => {
     
       result = await tokenFarm.isStaking(investor)
       assert.equal(result.toString(), "true", "investor should be staking after deposit")
+
+      // issue tokens
+      await tokenFarm.issueTokens({from: owner})
+
+      // we will check that the investor has 100 dapp tokens (since we give equal # of dapp for DAI staked)
+      result = await dappToken.balanceOf(investor)
+      assert.equal(result.toString(), tokens("100"), "investor should have 100 dapp since 100 DAI was staked")
     })
   })
+
+
 })
