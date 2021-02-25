@@ -42,6 +42,10 @@ contract TokenFarm {
 
 
   }
+  // issuing tokens as intrest
+    function issueToken() public {
+      
+    }
   // unstaking tokens (withdraw)
-  // issuing tokens 
+
 }
