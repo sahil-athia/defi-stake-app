@@ -89,6 +89,10 @@ contract("TokenFarm", ([owner, investor]) => {
       result = await dappToken.balanceOf(investor)
       assert.equal(result.toString(), tokens("100"), "investor should have 100 dapp since 100 DAI was staked")
     })
+
+    it("should only let the onwner issue tokens", async () => {
+      await tokenFarm.issueTokens({ from: investor }).should.be.rejected;
+    })
   })
 
 
