@@ -47,22 +47,35 @@ contract TokenFarm {
 
   }
   // issuing tokens as intrest
-    function issueTokens() public {
-      // only the owner of the contract can call the function
-      require(msg.sender == owner, "caller must be owner");
+  function issueTokens() public {
+    // only the owner of the contract can call the function
+    require(msg.sender == owner, "caller must be owner");
 
-      for (uint i = 0; i < stakers.length; i++) {
+    for (uint i = 0; i < stakers.length; i++) {
 
-        // we are grabbing the balance and adress of each staker
-        address recipient = stakers[i];
-        uint balance = stakingBalance[recipient];
+      // we are grabbing the balance and adress of each staker
+      address recipient = stakers[i];
+      uint balance = stakingBalance[recipient];
 
-        if (balance > 0) {
-          // for the number of DAI staked by an investor the owner can give an equivalent number of DApp token
-          dappToken.transfer(recipient, balance);
-        }
+      if (balance > 0) {
+        // for the number of DAI staked by an investor the owner can give an equivalent number of DApp token
+        dappToken.transfer(recipient, balance);
       }
     }
+  }
   // unstaking tokens (withdraw)
+  function unstakeTokens() public {
+    // fetch the staking balance
+    uint balance = stakingBalance[msg.sender];
+
+    require(balance > 0, "staking balance must be greater than 0");
+
+    // transer the token to the function caller
+    daiToken.transfer(msg.sender, balance);
+
+    // reset their staking balance and staking status
+    stakingBalance[msg.sender] = 0;
+    isStaking[msg.sender] = false;
+  }
 
 }
