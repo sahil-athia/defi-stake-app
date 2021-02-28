@@ -36,9 +36,11 @@ class App extends Component {
     const networkId = await web3.eth.net.getId()
     // load the dai token
 
+
+    // DAITOKEN LOADING ______________________________________________________________________________________
+    
     // this will give us the adddress
     const daiTokenData = DaiToken.networks[networkId]
-
     // this will create a JS version of the contract
     if(daiTokenData) {
       const daiToken = new web3.eth.Contract(DaiToken.abi, daiTokenData.address)
@@ -51,6 +53,8 @@ class App extends Component {
       window.alert("DaiToken contract not deployed to the detected network")
     }
 
+    // DAPPTOKEN LOADING _____________________________________________________________________________________
+   
     const dappTokenData = DappToken.networks[networkId]
     if(dappTokenData) {
       const dappToken = new web3.eth.Contract(DappToken.abi, dappTokenData.address)
@@ -61,6 +65,20 @@ class App extends Component {
     } else {
       window.alert("DappToken contract not deployed to the detected network")
     }
+
+    // TOKENFARM LOADING _____________________________________________________________________________________
+    
+    const tokenFarmData = TokenFarm.networks[networkId]
+    if(tokenFarmData) {
+      const tokenFarm = new web3.eth.Contract(TokenFarm.abi, tokenFarmData.address)
+      this.setState({ tokenFarm })
+
+      const stakingBalance = await tokenFarm.methods.stakingBalance(this.state.account).call()
+      this.setState({ stakingBalance: stakingBalance.toString() })
+    } else {
+      window.alert("TokenFarm contract not deployed to the detected network")
+    }
+  
   }
 
   async load_web3() {
