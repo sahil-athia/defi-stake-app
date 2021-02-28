@@ -4,6 +4,20 @@ import './App.css'
 import Web3 from 'web3'
 
 class App extends Component {
+  
+  constructor(props) {
+    super(props)
+    this.state = {
+      account: '0x0',
+      daiToken: {},
+      dappToken: {},
+      tokenFarm: {},
+      daiTokenBalance: {},
+      dappTokenBalance: {},
+      stakingBalance: {},
+      loading: true
+    }
+  }
 
   async componentWillMount() {
     await this.load_web3()
@@ -14,7 +28,7 @@ class App extends Component {
     const web3 = window.web3
 
     const accounts = await web3.eth.getAccounts()
-    console.log(accounts)
+    this.setState({ account: accounts[0] })
   }
 
   async load_web3() {
@@ -28,12 +42,6 @@ class App extends Component {
     }
   }
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      account: '0x0'
-    }
-  }
 
   render() {
     return (
