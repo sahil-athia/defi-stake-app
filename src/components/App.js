@@ -5,6 +5,15 @@ import Web3 from 'web3'
 
 class App extends Component {
 
+  async componentWillMount() {
+    await this.load_web3()
+    await this.loadBlockChainData()
+  }
+
+  async loadBlockChainData() {
+    const web3 = window.web3()
+  }
+
   async load_web3() {
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum)
