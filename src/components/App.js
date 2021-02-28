@@ -79,6 +79,7 @@ class App extends Component {
       window.alert("TokenFarm contract not deployed to the detected network")
     }
   
+    this.setState({ loading: false })
   }
 
   async load_web3() {
