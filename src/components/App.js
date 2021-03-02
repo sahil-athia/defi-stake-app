@@ -5,6 +5,7 @@ import Web3 from 'web3'
 import DaiToken from "../abis/DaiToken.json"
 import DappToken from "../abis/DappToken.json"
 import TokenFarm from "../abis/TokenFarm.json"
+import Main from "./Main"
 
 class App extends Component {
   
@@ -102,9 +103,8 @@ class App extends Component {
           <div className="row">
             <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '600px' }}>
               <div className="content mr-auto ml-auto">
-
-                <h1>Hello, World</h1>
-
+                {!this.state.loading && <Main />}
+                {this.state.loading && <p id="loader" className="text-center">Loading...</p>}
               </div>
             </main>
           </div>
