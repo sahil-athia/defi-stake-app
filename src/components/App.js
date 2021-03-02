@@ -92,6 +92,15 @@ class App extends Component {
     } else {
       window.alert("Non-ethereum browser detected. Try using MetaMask")
     }
+
+    stakeTokens = (amount) => {
+      this.setState({ loading: true })
+      this.state.daiToken.methods.approve(this.state.tokenFarm._address, amount).send({ from: this.state.account }).on('transactionHash', (hash) => {
+        this.state.tokenFarm.methods.stakeTokens(amount).send({ from: this.state.account }).on('transactionHash', (hash) => {
+          this.setState({ loading: false })
+        })
+      })
+    }
   }
 
 
