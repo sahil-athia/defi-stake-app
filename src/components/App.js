@@ -16,9 +16,9 @@ class App extends Component {
       daiToken: {},
       dappToken: {},
       tokenFarm: {},
-      daiTokenBalance: {},
-      dappTokenBalance: {},
-      stakingBalance: {},
+      daiTokenBalance: "0",
+      dappTokenBalance: "0",
+      stakingBalance: "0",
       loading: true
     }
   }
@@ -103,7 +103,15 @@ class App extends Component {
           <div className="row">
             <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '600px' }}>
               <div className="content mr-auto ml-auto">
-                {!this.state.loading && <Main />}
+                {!this.state.loading && 
+                  <Main 
+                    daiTokenBalance={this.state.daiTokenBalance}
+                    dappTokenBalance={this.state.dappTokenBalance}
+                    stakingBalance={this.state.stakingBalance}
+                    stakeTokens={this.stakeTokens}
+                    unstakeTokens={this.unstakeTokens}
+                  />
+                }
                 {this.state.loading && <p id="loader" className="text-center">Loading...</p>}
               </div>
             </main>
