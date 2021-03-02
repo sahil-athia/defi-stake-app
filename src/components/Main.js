@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import dai from "../dai.png"
 
 class Main extends Component {
   render() {
@@ -19,6 +20,19 @@ class Main extends Component {
             </tr>
           </tbody>
         </table>
+
+        <div className="card mb-4" >
+          <div className="card-body">
+            <form>
+              <div>
+                <label className="float-left"><b>Stake Tokens</b></label>
+                <span className="float-right text-muted">
+                  Balance: {window.web3.utils.fromWei(this.props.daiTokenBalance, 'Ether')}
+                </span>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     )
   }
