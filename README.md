@@ -1,8 +1,8 @@
 # Token Farm
 
-Token Farm is a decentralized finance app that rewards investors based on an investment.
+Token Farm is a decentralized finance app that rewards investors based on an investment, utilizing ethereum smart contracts.
 
-Users can ivest mock DAI tokens and receive an equal number for DAPP tokens as intrest. 
+Users can invest mock DAI tokens and receive an equal number of DAPP tokens as intrest. 
 
 This application is built with **Solidity**, **ReactJS**, **CSS**, **Chai**, **Ganache**, and **Truffle**
 
@@ -19,8 +19,10 @@ This application is built with **Solidity**, **ReactJS**, **CSS**, **Chai**, **G
 - Run `npm start` to open the app and connect MetsMask to the second ganache account, this is the default investor.
 - The rewards can be distrubited via command line using `truffle exec scripts/issue-tokens.js`.
 
+## App Preview
 
-
+- Home Page
+!["Home Page"]()
 
 ## Requirements
 - NodeJS v8.9.4 or later
