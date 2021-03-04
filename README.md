@@ -22,7 +22,7 @@ This application is built with **Solidity**, **ReactJS**, **CSS**, **Chai**, **G
 ## App Preview
 
 - Home Page
-!["Home Page"]()
+!["Home Page"](https://github.com/sahil-athia/defi-stake-app/blob/master/docs/home-page.png?raw=true)
 
 ## Requirements
 - NodeJS v8.9.4 or later
